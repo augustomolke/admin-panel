@@ -1,0 +1,124 @@
+generator nextAdmin {
+  provider = "next-admin-generator-prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Allocations {
+  id        Int             @id @default(autoincrement())
+  driver_id String
+  cluster   String
+  shift     SHIFTS
+  duration  Int
+  createdAt DateTime        @default(now())
+  updatedAt DateTime
+  type      ALLOCATION_TYPE
+}
+
+model Bookings {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  driver_id String   @db.VarChar(255)
+  name      String
+  plate     String
+  vehicle   String
+  station   String
+  phone     String
+  city      String
+  cep       String
+  date      DateTime
+  event_id  Int
+  info      String?
+  ownflex   Boolean  @default(false)
+  Event     Event    @relation(fields: [event_id], references: [id])
+}
+
+model Clusters {
+  zone_id      String
+  zone_name    String
+  station_id   Int
+  station_name String
+  zone_detail  String
+  zone_base_id Int    @id @default(autoincrement())
+}
+
+model Event {
+  id         Int        @id @default(autoincrement())
+  event_type EVENT_TYPE
+  location   String
+  options    String?
+  timezone   String
+  cron_exp   String
+  Bookings   Bookings[]
+}
+
+model Feedbacks {
+  id         Int      @id @default(autoincrement())
+  driver_id  String
+  nps        Int
+  reason     String
+  first_trip Boolean
+  text       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime
+}
+
+model Offers {
+  id        Int      @id @default(autoincrement())
+  cluster   String
+  shift     SHIFTS
+  duration  Int      @default(60)
+  spots     Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  station   String
+}
+
+model Options {
+  driver_id Int      @id @default(autoincrement())
+  options   String
+  createdAt DateTime @default(now())
+}
+
+model Preferences {
+  id          Int      @id @default(autoincrement())
+  driver_id   String
+  driver_name String
+  phone       String
+  station     String
+  vehicle     VEHICLE
+  cep         String
+  city        String
+  createdAt   DateTime @default(now())
+  booking_id  Int?
+  ownflex     Boolean  @default(false)
+}
+
+enum ALLOCATION_TYPE {
+  CROWDSOURCING
+  MANUAL
+  AUTOMATIC
+}
+
+enum EVENT_TYPE {
+  FIRST_TRIP
+  AVAILABILITY
+}
+
+enum SHIFTS {
+  AM
+  PM
+  SD
+}
+
+enum VEHICLE {
+  PASSEIO
+  MOTO
+  FIORINO
+  VAN
+  VUC
+}
