@@ -1,8 +1,9 @@
 import { MainLayout } from "@premieroctet/next-admin";
 import { getMainLayoutProps } from "@premieroctet/next-admin/appRouter";
 import { options } from "@/admin-options";
-import { prisma } from "@/prisma";
 import { Component } from "./component";
+import { Suspense } from "react";
+
 const CustomPage = async () => {
   const mainLayoutProps = getMainLayoutProps({
     basePath: "/admin",
@@ -11,9 +12,11 @@ const CustomPage = async () => {
   });
 
   return (
-    <MainLayout {...mainLayoutProps}>
-      <Component />
-    </MainLayout>
+    <Suspense>
+      <MainLayout {...mainLayoutProps}>
+        <Component />
+      </MainLayout>
+    </Suspense>
   );
 };
 
