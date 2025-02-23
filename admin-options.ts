@@ -88,20 +88,6 @@ export const options: NextAdminOptions = {
           },
         ],
       },
-      actions: [
-        {
-          type: "server",
-          title: "Enviar Wsp Alocação",
-          id: "submit-whatsapp",
-          action: async (ids) => {
-            await sendWspToList(ids);
-            console.log("Sending Whatsapp to " + ids.length + " users");
-          },
-          successMessage: "Whatsapp enviado com sucesso!",
-          errorMessage:
-            "Erro ao enviar whatsapp! Contate o coitado do augusto.",
-        },
-      ],
     },
     Bookings: {},
     Preferences: {},
