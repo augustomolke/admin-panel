@@ -1,3 +1,5 @@
+"use server";
+
 import { prisma } from "@/prisma";
 import { sleep } from "./utils";
 // import { sendWsp } from "./teste";
