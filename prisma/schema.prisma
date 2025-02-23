@@ -18,8 +18,9 @@ model Allocations {
   shift     SHIFTS
   duration  Int
   createdAt DateTime        @default(now())
-  updatedAt DateTime
+  updatedAt DateTime        @default(now())
   type      ALLOCATION_TYPE
+  endTime   DateTime?
 }
 
 model Bookings {
@@ -72,14 +73,15 @@ model Feedbacks {
 }
 
 model Offers {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   cluster   String
   shift     SHIFTS
-  duration  Int      @default(60)
-  spots     Int      @default(1)
-  createdAt DateTime @default(now())
-  updatedAt DateTime
+  duration  Int       @default(60)
+  spots     Int       @default(1)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
   station   String
+  endTime   DateTime?
 }
 
 model Options {
@@ -100,6 +102,19 @@ model Preferences {
   createdAt   DateTime @default(now())
   booking_id  Int?
   ownflex     Boolean  @default(false)
+}
+
+model Drivers {
+  driver_id String   @id
+  name      String
+  phone     String
+  station   String
+  plate     String
+  vehicle   VEHICLE
+  trips     Int      @default(0)
+  ownflex   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
 
 enum ALLOCATION_TYPE {

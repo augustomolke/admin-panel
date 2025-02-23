@@ -4,8 +4,13 @@ import { createManyAllocations } from "@/db/allocations";
 
 export function Component() {
   return (
-    <div className="flex w-screen h-screen items-center justify-center">
-      <XLSXFileInput onSubmit={createManyAllocations} />
-    </div>
+    <section className="w-lg">
+      <header className="flex justify-center font-semibold text-2xl">
+        Upload Allocations
+      </header>
+      <div className="flex w-screen h-screen items-center justify-center">
+        <XLSXFileInput onSubmit={createManyAllocations} />
+      </div>
+    </section>
   );
 }
