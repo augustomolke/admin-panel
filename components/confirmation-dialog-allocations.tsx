@@ -16,7 +16,9 @@ export function ConfirmationDialog(props: Props) {
       <div>
         <Button
           onClick={async () => {
-            onClose();
+            if (onClose) {
+              onClose();
+            }
             await sendWspToList(resourceIds);
           }}
         >

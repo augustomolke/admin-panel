@@ -1,5 +1,4 @@
 import { NextAdminOptions } from "@premieroctet/next-admin";
-import { sendWspToList } from "@/lib/noti";
 import { ConfirmationDialog } from "@/components/confirmation-dialog-allocations";
 import { ConfirmationDialog as ConfirmationDialogOffers } from "@/components/confirmation-dialog-offers";
 
