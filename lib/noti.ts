@@ -2,6 +2,7 @@
 
 import { prisma } from "@/prisma";
 import { sleep } from "./utils";
+import { OwnFlexShifts } from "./shifts";
 // import { sendWsp } from "./teste";
 
 const url = process.env.NOTI_URL || "";
@@ -30,16 +31,18 @@ export const sendWspToList = async (ids: any) => {
     },
   });
 
-  const promises = drivers.map((driver, idx) => async () => {
+  for (const driver of drivers) {
     const phone_number =
       driver.phone.length == 11 ? `55${driver.phone}` : driver.phone;
     const name = driver.name.split(" ")[0];
 
-    const shift = allocations.find(
-      (a) => a.driver_id == driver.driver_id
-    )?.shift;
+    const shifts = allocations
+      .filter((a) => a.driver_id == driver.driver_id)
+      .map((a) => a.shift)
+      .map((s) => OwnFlexShifts.find((a) => a.id == s).description)
+      .join(", ");
 
-    const slot = shift;
+    const slot = shifts;
 
     const data = {
       phone_number,
@@ -48,10 +51,33 @@ export const sendWspToList = async (ids: any) => {
       slot,
     };
 
-    await sendWsp(data);
-  });
+    await sleep(5000);
 
-  await processPromisesWithDelay(promises, 5000);
+    await sendWsp(data);
+  }
+
+  //   const promises = drivers.map((driver, idx) => async () => {
+  //     const phone_number =
+  //       driver.phone.length == 11 ? `55${driver.phone}` : driver.phone;
+  //     const name = driver.name.split(" ")[0];
+
+  //     const shift = allocations.find(
+  //       (a) => a.driver_id == driver.driver_id
+  //     )?.shift;
+
+  //     const slot = shift;
+
+  //     const data = {
+  //       phone_number,
+  //       language: "pt-BR",
+  //       name,
+  //       slot,
+  //     };
+
+  //     await sendWsp(data);
+  //   });
+
+  //   await processPromisesWithDelay(promises, 5000);
 };
 
 export const sendWsp = async (data: any) => {

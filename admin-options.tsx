@@ -1,6 +1,7 @@
 import { NextAdminOptions } from "@premieroctet/next-admin";
 import { sendWspToList } from "@/lib/noti";
-import { ConfirmationDialog } from "@/components/confirmation-dialog";
+import { ConfirmationDialog } from "@/components/confirmation-dialog-allocations";
+import { ConfirmationDialog as ConfirmationDialogOffers } from "@/components/confirmation-dialog-offers";
 
 export const options: NextAdminOptions = {
   title: "Admin Alocador",
@@ -22,6 +23,10 @@ export const options: NextAdminOptions = {
         },
       },
       list: {
+        exports: {
+          format: "CSV",
+          url: "/api/allocations/export?format=csv",
+        },
         filters: [
           async () => {
             const currentdate = new Date();
@@ -69,7 +74,26 @@ export const options: NextAdminOptions = {
           },
         },
       },
+      actions: [
+        {
+          type: "dialog",
+          component: <ConfirmationDialogOffers />,
+          title: "Enviar Wsp Alocação",
+          id: "submit-whatsapp",
+          // action: async (ids) => {
+          //   await sendWspToList(ids);
+          //   console.log("Sending Whatsapp to " + ids.length + " users");
+          // },
+          // successMessage: "Whatsapp enviado com sucesso!",
+          // errorMessage:
+          //   "Erro ao enviar whatsapp! Contate o coitado do augusto.",
+        },
+      ],
       list: {
+        exports: {
+          format: "CSV",
+          url: "/api/offers/export?format=csv",
+        },
         filters: [
           async () => {
             const currentdate = new Date();
