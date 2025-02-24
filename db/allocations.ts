@@ -9,7 +9,7 @@ export const createManyAllocations = async (allocations: any): Promise<any> => {
     return {
       ...a,
       driver_id: a.driver_id.toString(),
-      duration: 60,
+      duration: a.duration || 60,
       updatedAt: new Date(),
       createdAt: new Date(),
       type: "AUTOMATIC",

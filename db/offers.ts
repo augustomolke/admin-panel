@@ -11,6 +11,8 @@ export const createManyOffers = async (offers: any): Promise<any> => {
       updatedAt: new Date(),
       createdAt: new Date(),
       endTime: endTime.toISOString(),
+      spots: a.spots || 1,
+      duration: a.duration || 60,
     };
   });
 
