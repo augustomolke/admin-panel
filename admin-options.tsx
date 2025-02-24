@@ -23,10 +23,16 @@ export const options: NextAdminOptions = {
         },
       },
       list: {
-        exports: {
-          format: "CSV",
-          url: "/api/allocations/export?format=csv",
-        },
+        exports: [
+          {
+            format: "Tudo",
+            url: "/api/allocations/export?format=csv",
+          },
+          {
+            format: "Ativos",
+            url: "/api/allocations/export?format=csv&actives=true",
+          },
+        ],
         filters: [
           async () => {
             const currentdate = new Date();
@@ -90,10 +96,16 @@ export const options: NextAdminOptions = {
         },
       ],
       list: {
-        exports: {
-          format: "CSV",
-          url: "/api/offers/export?format=csv",
-        },
+        exports: [
+          {
+            format: "Tudo",
+            url: "/api/offers/export?format=csv",
+          },
+          {
+            format: "Ativos",
+            url: "/api/offers/export?format=csv&actives=true",
+          },
+        ],
         filters: [
           async () => {
             const currentdate = new Date();
