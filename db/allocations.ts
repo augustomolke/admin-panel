@@ -2,7 +2,7 @@
 import { prisma } from "../prisma";
 
 export const createManyAllocations = async (allocations: any): Promise<any> => {
-  const parsed = allocations.map((a) => {
+  const parsed = allocations.map((a: any) => {
     const endTime = new Date();
     endTime.setMinutes(endTime.getMinutes() + 60);
 

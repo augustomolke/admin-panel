@@ -7,12 +7,19 @@ import { Button } from "@/components/ui/button";
 import { arrayToObjects } from "@/lib/utils";
 import { Spinner } from "@/components/spinner";
 
-export default function XLSXFileInput({ onSubmit }) {
+export default function XLSXFileInput({
+  onSubmit,
+}: {
+  onSubmit: (data: any) => Promise<any>;
+}) {
   const [file, setFile] = useState(null);
-  const [dataInfo, setDataInfo] = useState(null);
+  const [dataInfo, setDataInfo] = useState<{
+    numRows?: number;
+    numCols?: number;
+  } | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleFileChange = (event) => {
+  const handleFileChange = (event: any) => {
     const selectedFile = event.target.files[0];
     if (
       selectedFile &&
@@ -34,7 +41,7 @@ export default function XLSXFileInput({ onSubmit }) {
 
     const reader = new FileReader();
     reader.onload = async (e) => {
-      const data = new Uint8Array(e.target.result);
+      const data = new Uint8Array(e.target?.result as ArrayBuffer);
       const workbook = XLSX.read(data, { type: "array" });
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];

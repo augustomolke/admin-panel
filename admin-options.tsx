@@ -1,5 +1,5 @@
 import { NextAdminOptions } from "@premieroctet/next-admin";
-import { ConfirmationDialog } from "@/components/confirmation-dialog-allocations";
+import { ConfirmationDialog as ConfirmationDialogAllocations } from "@/components/confirmation-dialog-allocations";
 import { ConfirmationDialog as ConfirmationDialogOffers } from "@/components/confirmation-dialog-offers";
 
 export const options: NextAdminOptions = {
@@ -51,9 +51,9 @@ export const options: NextAdminOptions = {
       actions: [
         {
           type: "dialog",
-          component: <ConfirmationDialog />,
+          component: <ConfirmationDialogAllocations />,
           title: "Enviar Wsp Alocação",
-          id: "submit-whatsapp",
+          id: "submit-whatsapp-allocations",
           // action: async (ids) => {
           //   await sendWspToList(ids);
           //   console.log("Sending Whatsapp to " + ids.length + " users");
@@ -83,8 +83,8 @@ export const options: NextAdminOptions = {
         {
           type: "dialog",
           component: <ConfirmationDialogOffers />,
-          title: "Enviar Wsp Alocação",
-          id: "submit-whatsapp",
+          title: "Enviar Wsp Crowdsourcing",
+          id: "submit-whatsapp-offers",
           // action: async (ids) => {
           //   await sendWspToList(ids);
           //   console.log("Sending Whatsapp to " + ids.length + " users");

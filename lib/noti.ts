@@ -39,7 +39,7 @@ export const sendWspToList = async (ids: any) => {
     const shifts = allocations
       .filter((a) => a.driver_id == driver.driver_id)
       .map((a) => a.shift)
-      .map((s) => OwnFlexShifts.find((a) => a.id == s).description)
+      .map((s) => OwnFlexShifts.find((a) => a.id == s)!.description)
       .join(", ");
 
     const slot = shifts;
@@ -106,7 +106,10 @@ export const sendWsp = async (data: any) => {
   }
 };
 
-async function processPromisesWithDelay(promises, delay) {
+async function processPromisesWithDelay(
+  promises: (() => Promise<any>)[],
+  delay: number
+) {
   const results = [];
   for (const promise of promises) {
     results.push(await promise());

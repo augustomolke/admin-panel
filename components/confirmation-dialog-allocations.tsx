@@ -11,7 +11,7 @@ export function ConfirmationDialog(props: Props) {
 
   return (
     <div className="flex flex-col justify-center items-center gap-4">
-      <div>{`Confirmar envio para ${data.length} motoristas?`} </div>
+      <div>{`Confirmar envio para ${data?.length} motoristas?`} </div>
 
       <div>
         <Button
