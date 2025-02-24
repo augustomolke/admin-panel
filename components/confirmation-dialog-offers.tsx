@@ -6,7 +6,7 @@ import { ClientActionDialogContentProps } from "@premieroctet/next-admin";
 
 type Props = ClientActionDialogContentProps<"Offers">;
 
-export function ConfirmationDialog(props: Props) {
+export default function ConfirmationDialog(props: Props) {
   const { data, resourceIds, onClose } = props;
 
   return (
