@@ -14,7 +14,7 @@ export const options: NextAdminOptions = {
           beforeDb: async (row) => {
             const endTime = new Date();
             endTime.setMinutes(
-              endTime.getMinutes() + Number(row.duration) || 0
+              endTime.getMinutes() + Number(row.duration) || 60
             );
 
             return { ...row, type: "MANUAL", endTime: endTime.toISOString() };
@@ -67,12 +67,11 @@ export const options: NextAdminOptions = {
     Offers: {
       edit: {
         display: ["cluster", "shift", "spots", "duration", "station"],
-
         hooks: {
           beforeDb: async (row) => {
             const endTime = new Date();
             endTime.setMinutes(
-              endTime.getMinutes() + Number(row.duration) || 0
+              endTime.getMinutes() + Number(row.duration) || 60
             );
 
             return { ...row, endTime: endTime.toISOString() };
