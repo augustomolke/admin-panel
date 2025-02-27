@@ -8,7 +8,7 @@ export const options: NextAdminOptions = {
     /* Your model configuration here */
     Allocations: {
       edit: {
-        display: ["driver_id", "shift", "cluster", "duration"],
+        display: ["driver_id", "shift", "cluster", "duration", "description"],
 
         hooks: {
           beforeDb: async (row) => {
@@ -66,7 +66,14 @@ export const options: NextAdminOptions = {
     },
     Offers: {
       edit: {
-        display: ["cluster", "shift", "spots", "duration", "station"],
+        display: [
+          "cluster",
+          "shift",
+          "spots",
+          "duration",
+          "station",
+          "description",
+        ],
         hooks: {
           beforeDb: async (row) => {
             const endTime = new Date();

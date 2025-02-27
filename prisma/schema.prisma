@@ -12,15 +12,16 @@ datasource db {
 }
 
 model Allocations {
-  id        Int             @id @default(autoincrement())
-  driver_id String
-  cluster   String
-  shift     SHIFTS
-  duration  Int
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @default(now())
-  type      ALLOCATION_TYPE
-  endTime   DateTime?
+  id          Int             @id @default(autoincrement())
+  driver_id   String
+  cluster     String
+  shift       SHIFTS
+  duration    Int
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @default(now())
+  type        ALLOCATION_TYPE
+  endTime     DateTime?
+  description String?
 }
 
 model Bookings {
@@ -73,15 +74,16 @@ model Feedbacks {
 }
 
 model Offers {
-  id        Int       @id @default(autoincrement())
-  cluster   String
-  shift     SHIFTS
-  duration  Int       @default(60)
-  spots     Int       @default(1)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now())
-  station   String
-  endTime   DateTime?
+  id          Int       @id @default(autoincrement())
+  cluster     String
+  shift       SHIFTS
+  duration    Int       @default(60)
+  spots       Int       @default(1)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+  station     String
+  endTime     DateTime?
+  description String?
 }
 
 model Options {
