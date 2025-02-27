@@ -39,7 +39,7 @@ export const options: NextAdminOptions = {
             return [
               {
                 name: "is Active",
-                active: false,
+                active: true,
                 value: {
                   endTime: { gte: currentdate },
                 },
@@ -80,19 +80,6 @@ export const options: NextAdminOptions = {
       },
       actions: [
         {
-          type: "server",
-          title: "Teste",
-          id: "submit-whatsapp-offers-teste",
-          action: async (ids) => {
-            console.log(window);
-            alert("a");
-            console.log("Sending Whatsapp to " + ids.length + " users");
-          },
-          successMessage: "Whatsapp enviado com sucesso!",
-          errorMessage:
-            "Erro ao enviar whatsapp! Contate o coitado do augusto.",
-        },
-        {
           type: "dialog",
           component: <ConfirmationDialogOffers />,
           title: "Enviar Wsp Crowdsourcing",
@@ -124,7 +111,7 @@ export const options: NextAdminOptions = {
             return [
               {
                 name: "is Active",
-                active: false,
+                active: true,
                 value: {
                   endTime: { gte: currentdate },
                 },
