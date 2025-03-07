@@ -2,9 +2,9 @@
 import { prisma } from "../prisma";
 import { createManyOffers } from "./offers";
 
-function countDriversByClusterAndShift(drivers, duration) {
+function countDriversByClusterAndShift(drivers: any, duration: number) {
   return Object.values(
-    drivers.reduce((acc, { cluster, shift, driver_id }) => {
+    drivers.reduce((acc: any, { cluster, shift, driver_id }: any) => {
       const key = `${cluster}-${shift}`;
       if (!acc[key]) {
         acc[key] = {
@@ -32,7 +32,7 @@ export const createManyAllocations = async (
 
   const parsed = allocations.map((a: any) => {
     const offer = createdOffers.find(
-      (o) => o.shift === a.shift && o.cluster === a.cluster
+      (o: any) => o.shift === a.shift && o.cluster === a.cluster
     );
 
     const offerId = offer?.id;

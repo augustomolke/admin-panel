@@ -6,7 +6,7 @@ export const createManyOffers = async (
   duration: number
 ): Promise<any> => {
   const parsed = offers
-    .filter((o) => !!o.cluster)
+    .filter((o: any) => !!o.cluster)
     .map((a: any) => {
       const endTime = new Date();
       endTime.setMinutes(endTime.getMinutes() + duration);

@@ -22,6 +22,7 @@ export async function GET(request: Request) {
       "spots",
       "createdAt",
       "station",
+      "offer_type",
     ].join(",");
 
     csv.unshift(firstRow);

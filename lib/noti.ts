@@ -19,7 +19,6 @@ export const sendWspToList = async (ids: any) => {
     },
     select: {
       driver_id: true,
-      shift: true,
       Offers: true,
     },
   });
@@ -63,7 +62,7 @@ export const sendCrowdSourcingWsp = async (ids: any) => {
   const allocations = await prisma.allocations.groupBy({
     by: ["driver_id"],
     _count: {
-      shift: true,
+      offerId: true,
     },
     where: {
       endTime: {
@@ -73,7 +72,7 @@ export const sendCrowdSourcingWsp = async (ids: any) => {
   });
 
   const available_drivers = allocations
-    .filter((a) => a._count.shift >= 2)
+    .filter((a) => a._count.offerId >= 2)
     .map((d) => d.driver_id);
 
   const drivers = await prisma.drivers.findMany({

@@ -11,18 +11,15 @@ export async function GET(request: Request) {
     : {};
 
   if (format === "csv") {
-    const allocations = await prisma.allocations.findMany({ where });
+    const allocations = await prisma.allocations.findMany({
+      where,
+      include: { Offers: true },
+    });
     const csv = allocations.map((allocation) => {
-      return `${allocation.driver_id},${allocation.shift},${allocation.cluster},${allocation.type},${allocation.createdAt}`;
+      return `${allocation.driver_id},${allocation.Offers.shift},${allocation.Offers.cluster},${allocation.Offers.offer_type},${allocation.createdAt}`;
     });
 
-    const firstRow = [
-      "driver_id",
-      "shift",
-      "cluster",
-      "type",
-      "createdAt",
-    ].join(",");
+    const firstRow = ["driver_id", "cluster", "type", "createdAt"].join(",");
 
     csv.unshift(firstRow);
 
