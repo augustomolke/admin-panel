@@ -1,6 +1,7 @@
 import { NextAdminOptions } from "@premieroctet/next-admin";
 import ConfirmationDialogAllocations from "@/components/confirmation-dialog-allocations";
 import ConfirmationDialogOffers from "@/components/confirmation-dialog-offers";
+import { prisma } from "./prisma";
 
 export const options: NextAdminOptions = {
   title: "Admin Alocador",
@@ -8,16 +9,19 @@ export const options: NextAdminOptions = {
     /* Your model configuration here */
     Allocations: {
       edit: {
-        display: ["driver_id", "shift", "cluster", "duration", "description"],
-
         hooks: {
           beforeDb: async (row) => {
-            const endTime = new Date();
-            const duration = row.duration ? Number(row.duration) : 60;
+            const offer = await prisma.offers.findUnique({
+              where: {
+                id: Number(row.Offers),
+              },
+            });
 
-            endTime.setMinutes(endTime.getMinutes() + duration);
+            if (!offer) {
+              throw new Error("Offer not found");
+            }
 
-            return { ...row, type: "MANUAL", endTime: endTime.toISOString() };
+            return { ...row, endTime: offer.endTime!.toISOString() };
           },
         },
       },
@@ -38,7 +42,7 @@ export const options: NextAdminOptions = {
 
             return [
               {
-                name: "is Active",
+                name: "Ativos",
                 active: true,
                 value: {
                   endTime: { gte: currentdate },
@@ -66,23 +70,15 @@ export const options: NextAdminOptions = {
     },
     Offers: {
       edit: {
-        display: [
-          "cluster",
-          "shift",
-          "spots",
-          "duration",
-          "station",
-          "description",
-        ],
         hooks: {
           beforeDb: async (row) => {
-            const endTime = new Date();
+            const newEndTime = new Date();
 
             const duration = row.duration ? Number(row.duration) : 60;
 
-            endTime.setMinutes(endTime.getMinutes() + duration);
+            newEndTime.setMinutes(newEndTime.getMinutes() + duration);
 
-            return { ...row, endTime: endTime.toISOString() };
+            return { ...row, endTime: newEndTime.toISOString() };
           },
         },
       },
@@ -118,7 +114,7 @@ export const options: NextAdminOptions = {
 
             return [
               {
-                name: "is Active",
+                name: "Ativos",
                 active: true,
                 value: {
                   endTime: { gte: currentdate },

@@ -20,6 +20,7 @@ export const sendWspToList = async (ids: any) => {
     select: {
       driver_id: true,
       shift: true,
+      Offers: true,
     },
   });
 
@@ -38,8 +39,7 @@ export const sendWspToList = async (ids: any) => {
 
     const shifts = allocations
       .filter((a) => a.driver_id == driver.driver_id)
-      .map((a) => a.shift)
-      .map((s) => OwnFlexShifts.find((a) => a.id == s)!.description)
+      .map((a) => a.Offers?.description)
       .join(", ");
 
     const slot = shifts;
