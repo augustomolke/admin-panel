@@ -9,6 +9,8 @@ export const options: NextAdminOptions = {
     /* Your model configuration here */
     Allocations: {
       edit: {
+        display: ["driver_id", "description", "Offers"],
+
         hooks: {
           beforeDb: async (row) => {
             const offer = await prisma.offers.findUnique({
@@ -26,6 +28,7 @@ export const options: NextAdminOptions = {
         },
       },
       list: {
+        search: ["driver_id", "offerId"],
         exports: [
           {
             format: "Tudo",

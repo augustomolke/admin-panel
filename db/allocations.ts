@@ -2,7 +2,7 @@
 import { prisma } from "../prisma";
 import { createManyOffers } from "./offers";
 
-function countDriversByClusterAndShift(drivers) {
+function countDriversByClusterAndShift(drivers, duration) {
   return Object.values(
     drivers.reduce((acc, { cluster, shift, driver_id }) => {
       const key = `${cluster}-${shift}`;
@@ -11,7 +11,7 @@ function countDriversByClusterAndShift(drivers) {
           cluster,
           shift,
           spots: 0,
-          duration: 60,
+          duration,
           station: "OF Hub_SP_Lapa",
           offer_type: "AUTOMATIC",
         };
@@ -22,22 +22,29 @@ function countDriversByClusterAndShift(drivers) {
   );
 }
 
-export const createManyAllocations = async (allocations: any): Promise<any> => {
-  const offersToCreate = countDriversByClusterAndShift(allocations);
+export const createManyAllocations = async (
+  allocations: any,
+  duration: number
+): Promise<any> => {
+  const offersToCreate = countDriversByClusterAndShift(allocations, duration);
 
-  const createdOffers = await createManyOffers(offersToCreate);
+  const createdOffers = await createManyOffers(offersToCreate, duration);
 
   const parsed = allocations.map((a: any) => {
-    const offerId = createdOffers.find(
+    const offer = createdOffers.find(
       (o) => o.shift === a.shift && o.cluster === a.cluster
-    )?.id;
+    );
+
+    const offerId = offer?.id;
+    const endTime = offer?.endTime;
 
     return {
-      ...a,
       driver_id: a.driver_id.toString(),
+      description: a.description,
       updatedAt: new Date(),
       createdAt: new Date(),
       offerId,
+      endTime,
     };
   });
 

@@ -10,9 +10,11 @@ import { Spinner } from "@/components/spinner";
 export default function XLSXFileInput({
   onSubmit,
 }: {
-  onSubmit: (data: any) => Promise<any>;
+  onSubmit: (data: any, duration: number) => Promise<any>;
 }) {
   const [file, setFile] = useState(null);
+  const [duration, setDuration] = useState(300);
+
   const [dataInfo, setDataInfo] = useState<{
     numRows?: number;
     numCols?: number;
@@ -54,7 +56,7 @@ export default function XLSXFileInput({
 
       try {
         setLoading(true);
-        const created = await onSubmit(objects);
+        const created = await onSubmit(objects, duration);
         setLoading(false);
 
         setDataInfo({ numRows: created.length });
@@ -71,9 +73,9 @@ export default function XLSXFileInput({
       {loading ? (
         <Spinner />
       ) : (
-        <>
+        <div className="flex flex-col gap-4">
           <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="file">File</Label>
+            <Label htmlFor="file">Planilha</Label>
             <Input
               id="picture"
               type="file"
@@ -82,13 +84,23 @@ export default function XLSXFileInput({
             />
           </div>
 
-          <Button onClick={handleSubmit}>Submit</Button>
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label htmlFor="pictudurationre">Duração</Label>
+            <Input
+              id="duration"
+              type="number"
+              defaultValue={300}
+              onChange={(e) => setDuration(parseInt(e.target.value))}
+            />
+          </div>
+
+          <Button onClick={handleSubmit}>Salvar</Button>
           {dataInfo && (
             <div>
               <p>Dados inseridos com sucesso: {dataInfo.numRows}</p>
             </div>
           )}
-        </>
+        </div>
       )}
     </div>
   );

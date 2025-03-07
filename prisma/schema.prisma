@@ -12,18 +12,14 @@ datasource db {
 }
 
 model Allocations {
-  id          Int              @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   driver_id   String
-  cluster     String?
-  shift       SHIFTS?
-  duration    Int?
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @default(now())
-  type        ALLOCATION_TYPE?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
   endTime     DateTime?
   description String?
-  offerId     Int?
-  Offers      Offers?          @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  offerId     Int
+  Offers      Offers    @relation(fields: [offerId], references: [id], onDelete: Cascade)
 }
 
 model Bookings {
@@ -86,7 +82,7 @@ model Offers {
   station     String
   endTime     DateTime?
   description String?
-  offer_type  OFFER_TYPE
+  offer_type  OFFER_TYPE  
   Allocations Allocations[]
 }
 
