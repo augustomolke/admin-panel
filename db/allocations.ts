@@ -30,23 +30,25 @@ export const createManyAllocations = async (
 
   const createdOffers = await createManyOffers(offersToCreate, duration);
 
-  const parsed = allocations.map((a: any) => {
-    const offer = createdOffers.find(
-      (o: any) => o.shift === a.shift && o.cluster === a.cluster
-    );
+  const parsed = allocations
+    .map((a: any) => {
+      const offer = createdOffers.find(
+        (o: any) => o.shift === a.shift && o.cluster === a.cluster
+      );
 
-    const offerId = offer?.id;
-    const endTime = offer?.endTime;
+      const offerId = offer?.id;
+      const endTime = offer?.endTime;
 
-    return {
-      driver_id: a.driver_id.toString(),
-      description: a.description,
-      updatedAt: new Date(),
-      createdAt: new Date(),
-      offerId,
-      endTime,
-    };
-  });
+      return {
+        driver_id: a.driver_id?.toString(),
+        description: a.description,
+        updatedAt: new Date(),
+        createdAt: new Date(),
+        offerId,
+        endTime,
+      };
+    })
+    .filter((a: any) => !!a.driver_id);
 
   return await prisma.allocations.createManyAndReturn({
     data: parsed,

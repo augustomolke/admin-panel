@@ -19,7 +19,8 @@ export const createManyOffers = async (
         spots: a.spots || 1,
         duration: duration,
       };
-    });
+    })
+    .filter((a: any) => !!a.cluster);
 
   return await prisma.offers.createManyAndReturn({
     data: parsed,
